@@ -1,0 +1,58 @@
+package com.example.calculadoradeprestamos.View
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.calculadoradeprestamos.Componet.MainButton
+import com.example.calculadoradeprestamos.Componet.MainTextField
+import com.example.calculadoradeprestamos.Componet.ShowInfoCards
+import com.example.calculadoradeprestamos.Componet.SpaceH
+
+@Composable
+fun ContentHomeView(paddingValues: PaddingValues){
+    var montoPrestamo by remember { mutableStateOf("") }
+    var cantCuotas by remember { mutableStateOf("") }
+    var tasa by remember { mutableStateOf("") }
+    var montoIntereses by remember { mutableStateOf(0.0) }
+    var montoCuota by remember { mutableStateOf(0.0) }
+
+    var showAlert by remember { mutableStateOf(false) }
+    Column(modifier = Modifier
+        .padding(paddingValues)
+        .padding(10.dp)
+        .fillMaxSize(),
+        horizontalAlignment =  Alignment.CenterHorizontally) {
+        ShowInfoCards(
+            titleInteres = "Intereses",
+            montoInteres = 100.0,
+            titleMonto = "Monto",
+            monto = 1000.0
+        )
+
+        MainTextField(value = montoPrestamo, onValueChange = {montoPrestamo = it}, label = "prestamo")
+        SpaceH()
+        MainTextField(value = cantCuotas, onValueChange = {cantCuotas = it}, label = "cuotas")
+        SpaceH(10.dp)
+        MainTextField(value = tasa, onValueChange = {tasa = it}, label = "tasa")
+        SpaceH(20.dp)
+        MainButton(text = "Calcular"){
+            if (montoPrestamo != "" && cantCuotas != ""){
+                montoIntereses = calcularTotal(montoIntereses.toDouble(),cantCuotas.toInt(),tasa.toDouble())
+                montoCuota = calcularcuota(montoPrestamo.toDouble(),cantCuotas.toInt(),tasa.toDouble())
+            }else{
+                showAlert = true
+            }
+        }
+    }
+}
+
+fun calcularTotal(monto: Double, cuotas: Int,tasa)
