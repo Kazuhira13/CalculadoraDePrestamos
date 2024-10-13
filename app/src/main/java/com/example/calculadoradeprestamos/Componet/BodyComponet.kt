@@ -51,8 +51,9 @@ fun MainTextField(value: String, onValueChange: (String) -> Unit, label: String)
 @Composable
 fun MainButton(
     text: String,
-    onClick: () -> Unit,
-    color: Color = MaterialTheme.colorScheme.primary){
+    color: Color = MaterialTheme.colorScheme.primary,
+    onClick: () -> Unit
+){
     OutlinedButton(
         onClick = onClick,
         colors = ButtonDefaults.outlinedButtonColors(contentColor = color, containerColor = Color.Transparent),
@@ -71,7 +72,7 @@ fun Alert(title: String, message: String, confirmeText: String, onConfirmClick: 
         title = { Text(text = title)},
         text = { Text(text = message)},
         confirmButton = {
-            Button(onClick = {onConfirmClick}) {
+            Button(onClick = {onConfirmClick()}) {
                 Text(text = confirmeText)
             }
         }
